@@ -1,56 +1,60 @@
 #include <stdio.h>
 #include <Windows.h>
 
-enum SCENE
-{
-	LOGO,
-	MENU,
-	STAGE,
-};
+void InitLogo();
+void UpdateLogo();
 
-void Logo()
+//커서 이동
+void SetPosition(int x, int y)
 {
-	printf("Logo\n");
-	if (GetAsyncKeyState(VK_RETURN))
-	{
-	   // //scene을 MENU로 넘겨주세요.
-	}
+	COORD pos;
+	pos.X = x * 2;
+	pos.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-void Menu()
-{
-	printf("Menu\n");
-}
-
-void Stage()
-{
-	printf("Stage\n");
-}
+const char* logoTexts[13];
 
 int main()
-{
-	SCENE scene = LOGO;
-
+{	
+	InitLogo();
 
 	while (true)
 	{
-		//system("cls");
-		switch (scene)
-		{
-		case 0:
-			Logo();
-			break;
-		case 1:
-			Menu();
-			break;
-		case 2:
-			Stage();
-			break;
-		default:
-			break;
-		}
-
-		Sleep(1000);
+		system("cls");
+		UpdateLogo();
+		Sleep(50);
 	}
 	return 0;
+}
+
+void InitLogo()
+{
+
+	logoTexts[0] = "    ..........           @@@@@    @@@@@.......";
+	logoTexts[1] = "     .........          @     @  @     @.......";
+	logoTexts[2] = "      ........             @@@   @     @........";
+	logoTexts[3] = "       .......           @@      @     @  .......";
+	logoTexts[4] = "        ......          @@@@@@@   @@@@@  th ......";
+	logoTexts[5] = "         .....        ----------------------- .....";
+	logoTexts[6] = "          ....          C  E  N  T  U  R  Y     ....";
+	logoTexts[7] = "           ...        -----------------------     ...";
+	logoTexts[8] = "            ..        @@@@@ @@@@@ @   @ @@@@@       ..";
+	logoTexts[9] = "            ==          @   @      @ @    @          ==";
+	logoTexts[10] = "          __||__        @   @@@@    @     @        __||__";
+	logoTexts[11] = "         |      |       @   @      @ @    @       |      |";
+	logoTexts[12] = "_________|______|_____  @   @@@@@ @   @   @  _____|______|_________";
+
+}
+
+
+
+void UpdateLogo()
+{
+	for (int i = 0; i < 13; i++)
+	{
+		SetPosition(2, 5 + i);
+		printf(logoTexts[i]);
+
+	}
 }
